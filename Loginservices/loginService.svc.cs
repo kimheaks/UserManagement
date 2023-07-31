@@ -22,7 +22,7 @@ namespace Admlogin.Loginservices
             using (SqlConnection connection = new SqlConnection(connectionString))
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                command.Parameters.AddWithValue("@username", username);
+                command.Parameters.AddWithValue("@username", username);  /*add paramete username to @username*/
                 command.Parameters.AddWithValue("@password", password);
                 try
                 {
@@ -30,9 +30,10 @@ namespace Admlogin.Loginservices
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.StackTrace);
-}                int count = (int)command.ExecuteScalar();
+                    return(ex.Message);
+                    //return(ex.StackTrace);
+                }                
+                int count = (int)command.ExecuteScalar();    
                 if (count == 1)
                 {
                     return "1";
