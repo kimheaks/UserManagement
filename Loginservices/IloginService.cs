@@ -11,9 +11,8 @@ namespace Admlogin.Loginservices
     [ServiceContract]
     public interface IloginService
     {
-
-        [OperationContract]
         string DoWork(string username, string password);
+        //bool Logout();
 
     }
 }

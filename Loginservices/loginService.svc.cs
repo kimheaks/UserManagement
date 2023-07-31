@@ -15,6 +15,7 @@ namespace Admlogin.Loginservices
     // NOTE: In order to launch WCF Test Client for testing this service, please select loginService.svc or loginService.svc.cs at the Solution Explorer and start debugging.
     public class loginService : IloginService
     {
+        [OperationContract]
         public string DoWork(string username, string password) {
 
             string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
@@ -46,6 +47,12 @@ namespace Admlogin.Loginservices
             }
 
         }
+
+        //[OperationContract]
+        //public bool Logout() {
+        //    return true;
+        //}
+
 
     }
 }
