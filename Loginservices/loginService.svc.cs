@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.Configuration;
 using System.Data.SqlClient;
 
 
@@ -16,7 +17,7 @@ namespace Admlogin.Loginservices
     {
         public string DoWork(string username, string password) {
 
-            string connectionString = "Data Source=DESKTOP-S2LB41L\\SQLEXPRESS;Initial Catalog=login;Integrated Security=True";
+            string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
             string query = "SELECT COUNT(*) FROM userloginn WHERE username=@username AND psw=@password;";
 
             using (SqlConnection connection = new SqlConnection(connectionString))

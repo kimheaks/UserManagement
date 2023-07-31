@@ -4,7 +4,7 @@
 
     <div class="jumbotron">
         <div class="row p-4">
-            <img src="img/undraw_welcome_cats_thqn.svg" class="img-fluid" alt="alt"/>
+            <img src="img/undraw_welcome_cats_thqn.svg" class="img-fluid " alt="alt"/>
         </div>
     </div>
     <div class="row">
