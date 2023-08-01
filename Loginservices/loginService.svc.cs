@@ -7,7 +7,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Configuration;
 using System.Data.SqlClient;
-
+using System.Web.Security;
 
 namespace Admlogin.Loginservices
 {
@@ -15,43 +15,52 @@ namespace Admlogin.Loginservices
     // NOTE: In order to launch WCF Test Client for testing this service, please select loginService.svc or loginService.svc.cs at the Solution Explorer and start debugging.
     public class loginService : IloginService
     {
-        public string DoWork(string username, string password) {
-
-            string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
-            string query = "SELECT COUNT(*) FROM userloginn WHERE username=@username AND psw=@password;";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand(query, connection))
+        public string DoWork(string username, string password)
+        {
+            // Check if the user is already authenticated
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                command.Parameters.AddWithValue("@username", username);  /*add paramete username to @username*/
-                command.Parameters.AddWithValue("@password", password);
-                try
+                // User is already authenticated, return success
+                return "1";
+            }
+            else
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+                string query = "SELECT COUNT(*) FROM userloginn WHERE username=@username AND psw=@password;";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    connection.Open();
-                }
-                catch (Exception ex)
-                {
-                    return(ex.Message);
-                    //return(ex.StackTrace);
-                }                
-                int count = (int)command.ExecuteScalar();    
-                if (count == 1)
-                {
-                    return "1";
-                }
-                else
-                {
-                    return "0";
+                    command.Parameters.AddWithValue("@username", username);  /*add paramete username to @username*/
+                    command.Parameters.AddWithValue("@password", password);
+                    try
+                    {
+                        connection.Open();
+                    }
+                    catch (Exception ex)
+                    {
+                        return (ex.Message);
+                        //return(ex.StackTrace);
+                    }
+                    int count = (int)command.ExecuteScalar();
+                    if (count == 1)
+                    {
+                        // Store session with the username
+                        FormsAuthentication.SetAuthCookie(username, false);
+                        return "1";
+                    }
+                    else
+                    {
+                        return "0";
+                    }
                 }
             }
-
         }
-
-        //[OperationContract]
-        //public bool Logout() {
-        //    return true;
-        //}
-
-
+        public string Logout()
+        {
+            return "Hello pretty girl";
+            //FormsAuthentication.SignOut();
+        }
     }
+    
 }

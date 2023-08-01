@@ -1,6 +1,6 @@
 ﻿
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     var inputUsername = $('input')[0];
     var inputPassword = $('input')[1];
@@ -58,5 +58,46 @@ $(document).ready(function() {
         });
     });
 
+    $('#btnLogout').click(function () {
+        $.ajax({
+            method: 'POST',
+            url: '../Loginservices/loginService.svc/ajaxService1/Logout',
+            success: function (data) {
+                if (data.d == "Hello pretty girl") {
+                    Swal.fire({
+                        background: '#fffff',
+                        icon: 'error',
+                        text: 'Incorrect username or password',
+                        iconColor: '',
+                        confirmButtonColor: '#3F3D56',
+                        showCloseButton: true
+                    })
+                } else {
+                    alert("hI");
+                }
+                //console.log(typeof (data))
+                /*alert(data.d);*/
+                // Reload the page after logout
+                //        window.location.href = 'Default.aspx';
 
+            },
+            error: function (error) {
+                // Handle the error
+                alert('Error: ' + error);
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $("#btnAdd").click(function () {
+            $.ajax({
+                url: "form.html", // Replace with the URL of your form
+                type: "GET",
+                dataType: "html",
+                success: function (data) {
+                    $("#form-container").html(data); // Replace "form-container" with the ID of the element where you want to insert the form
+                }
+            });
+        });
+    });
 })

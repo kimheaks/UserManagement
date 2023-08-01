@@ -4,27 +4,38 @@
     <header>
         <div class="container-lg">
             <div class="jumbotron py-4">
-                <nav class="navbar">
-                  <div class="input-group">
-                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                    <button type="button" class="btn btn-outline-primary">search</button>
+                <div class="row">
+                    <div class="col-10">
+                        <div class="input-group">
+                            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                            <button type="button" class="btn btn-outline-primary" id="btnsearch">search</button>
+                        </div>
                     </div>
-                </nav>
+                    <div class="col-2 d-flex align-self-end">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <button class="btn btn-outline-success my-2 my-sm-0" id="btnAdd" type="submit">Add Student</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
+                
+         </div>
+    
     </header>
     <section>
         <div class="container-fluid">
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Handle</th>
-                  <th scope="col">Handle</th>
-                  <th scope="col">Handle</th>
-                  <th scope="col">Handle</th>
+                  <th scope="col">Id</th>
+                  <th scope="col">Firstname</th>
+                  <th scope="col">Lastname</th>
+                  <th scope="col">Sex</th>
+                  <th scope="col">Dob</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Email</th>
                 </tr>
               </thead>
               <tbody>

@@ -7,12 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace Admlogin
 {
-    public partial class SiteMaster : MasterPage
+    public partial class form : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
-        
     }
 }
