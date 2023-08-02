@@ -93,7 +93,7 @@
         var Valdob = $('#AddStudentdob').val();
         var Valphone = $('#AddStudentphone').val();
         var Valemail = $('#AddStudentemail').val();
-        var obj: { fname: Valfname, lname: Vallname, sex: Valsex, dob: Valdob, phone: Valphone, email: Valemail };
+        var obj: {fname: Valfname, lname: Vallname, sex: Valsex, dob: Valdob, phone: Valphone, email: Valemail };
         $.ajax({
             method: 'POST',
             url: '../AddService/AddStudent.svc/ajaxService2/appendStudent',

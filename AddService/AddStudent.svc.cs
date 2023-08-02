@@ -4,6 +4,11 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using Admlogin.Class;
+using System.Data.Sql;
+using System.Configuration;
+
+
 
 namespace Admlogin.AddService
 {
@@ -11,21 +16,16 @@ namespace Admlogin.AddService
     // NOTE: In order to launch WCF Test Client for testing this service, please select AddStudent.svc or AddStudent.svc.cs at the Solution Explorer and start debugging.
     public class AddStudent : IAddStudent
     {
-        public string appendStudent()
-
+        public void appendStudent() 
         {
-            return "hello";
+            //declare instance of the class 
+            studentInfo obj = new studentInfo();
+            string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            string query = " EXCE PROC InsertStudent  FROM userloginn WHERE username=@username AND psw=@password;";
+
+
         }
 
-        public class studentInformation
-        {
-            public string firstname { get; set; }
-            public string lastname { get; set; }
-            public string sex { get; set; }
-            public string dob { get; set; }
-            public string   phone { get; set; }
-            public string email { get; set; }
 
-        }
     }
 }

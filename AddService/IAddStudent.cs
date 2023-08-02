@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using Admlogin.Class;
 
 namespace Admlogin.AddService
 {
@@ -12,6 +13,7 @@ namespace Admlogin.AddService
     public interface IAddStudent
     {
         [OperationContract]
-        string appendStudent();
+        void appendStudent();
     }
+    
 }
