@@ -1,6 +1,4 @@
-﻿
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
 
     var inputUsername = $('input')[0];
     var inputPassword = $('input')[1];
@@ -21,8 +19,6 @@ $(document).ready(function () {
             event.preventDefault();
         }
     });
-
-
 
     $('#btnsubmit').click(function (e) {
         e.preventDefault(); // prevent default form submit action
@@ -87,17 +83,39 @@ $(document).ready(function () {
             }
         });
     });
-
-    $(document).ready(function () {
-        $("#btnAdd").click(function () {
-            $.ajax({
-                url: "form.html", // Replace with the URL of your form
-                type: "GET",
-                dataType: "html",
-                success: function (data) {
-                    $("#form-container").html(data); // Replace "form-container" with the ID of the element where you want to insert the form
-                }
-            });
+   
+   
+    $("#btnAddstudent").click(function (e) {
+        e.preventDefault(); // prevent default form submit action
+        var Valfname = $('#AddStudentfname').val();
+        var Vallname = $('#AddStudentlname').val();
+        var Valsex = $('#AddStudentsex').val();
+        var Valdob = $('#AddStudentdob').val();
+        var Valphone = $('#AddStudentphone').val();
+        var Valemail = $('#AddStudentemail').val();
+        var obj: { fname: Valfname, lname: Vallname, sex: Valsex, dob: Valdob, phone: Valphone, email: Valemail };
+        $.ajax({
+            method: 'POST',
+            url: '../AddService/AddStudent.svc/ajaxService2/appendStudent',
+            data: JSON.stringify(obj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var result = data.d
+                Swal.fire({
+                    background: '#fffff',
+                    icon: 'error',
+                    text: result,
+                    iconColor: '',
+                    confirmButtonColor: '#3F3D56',
+                    showCloseButton: true
+                })
+            },
+            error: function (error) {
+                // Handle the error
+                alert('Error: ' + error);
+            }
         });
     });
-})
+   
+})  

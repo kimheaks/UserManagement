@@ -11,7 +11,7 @@ namespace Admlogin
 {
 
 
-    public partial class form
+    public partial class studentForm
     {
     }
 }
