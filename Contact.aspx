@@ -71,7 +71,7 @@
     </header>
     <section>
         <div class="container-fluid" id="form-container">
-            <table class="table">
+            <table class="table" id="studentList">
               <thead>
                 <tr>
                   <th scope="col">Id</th>
@@ -112,20 +112,20 @@
                                     <div class="form-outline">
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <input type="text"  class="form-control bg-light my-4" name="fname" placeholder="Firstname"/>
-                                                <input type="text" class="form-control bg-light my-4"  name="sex" placeholder="Sex" />
+                                                <input type="text" id="inputfname" class="form-control bg-light my-4" name="fname" placeholder="Firstname"/>
+                                                <input type="text" id="inputSex" class="form-control bg-light my-4"  name="sex" placeholder="Sex (M or F)" />
                                             </div>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control bg-light my-4" name="lname" placeholder="Lastname"/>
-                                                <input type="text" class="form-control bg-light my-4" name="dob"  placeholder="Date of birth" data-toggle="datepicker" />
+                                                <input type="text" id="inputlastname" class="form-control bg-light my-4" name="lname" placeholder="Lastname"/>
+                                                <input type="text" id="inputdob" class="form-control bg-light my-4" name="dob"  placeholder="Date of birth" data-toggle="datepicker" />
                                             </div>
                                         </div>
                                         <div class="row d-flex flex-column">
                                             <div class="col">
-                                                <input type="text"  class="form-control bg-light my-2" name="phone" placeholder="Phone number"/>
+                                                <input type="text" id="inputphone" class="form-control bg-light my-2" name="phone" placeholder="Phone number"/>
                                             </div>
                                             <div class="col">
-                                                <input type="text" class="form-control bg-light my-2"  name="email" placeholder="Email"/>
+                                                <input type="text" id="inputemail" class="form-control bg-light my-2"  name="email" placeholder="Email"/>
                                             </div>
                                         </div>
                                     </div>

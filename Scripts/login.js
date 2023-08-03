@@ -83,7 +83,17 @@
             }
         });
     });
-   
+
+    var inputname = ['#inputfname','#inputlastname']
+    var inputsex = $('#inputSex');
+    var inputdob = $('#inputdob');
+    var inputphone = $('#inputphone');
+    var inputemail = $('#inputemail');
+
+    $(inputsex).keypress(function (event) {
+        alert("hi");
+    });
+
    
     $("#btnAddstudent").click(function (e) {
         e.preventDefault(); // prevent default form submit action
@@ -93,7 +103,14 @@
         var Valdob = $('#AddStudentdob').val();
         var Valphone = $('#AddStudentphone').val();
         var Valemail = $('#AddStudentemail').val();
-        var obj: {fname: Valfname, lname: Vallname, sex: Valsex, dob: Valdob, phone: Valphone, email: Valemail };
+        var obj= {
+            firstname: Valfname,
+            lastname: Vallname,
+            sex: Valsex,
+            dob: Valdob,
+            phone: Valphone,
+            email: Valemail
+        };
         $.ajax({
             method: 'POST',
             url: '../AddService/AddStudent.svc/ajaxService2/appendStudent',
@@ -101,21 +118,66 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                var result = data.d
-                Swal.fire({
-                    background: '#fffff',
-                    icon: 'error',
-                    text: result,
-                    iconColor: '',
-                    confirmButtonColor: '#3F3D56',
-                    showCloseButton: true
-                })
+                var result = data.d;
+                if (result === "1") {
+                    Swal.fire({
+                        background: '#fffff',
+                        icon: 'success',
+                        text: 'New record has been added successfuly',
+                        iconColor: 'green',
+                        confirmButtonColor: '#3F3D56',
+                        showCloseButton: true
+                    })
+                } else {
+                    Swal.fire({
+                        background: '#fffff',
+                        icon: 'error',
+                        text: 'Something went wrong',
+                        iconColor: 'red',
+                        confirmButtonColor: '#3F3D56',
+                        showCloseButton: true
+                    })
+                }
             },
             error: function (error) {
-                // Handle the error
-                alert('Error: ' + error);
+                var response = JSON.parse(error.responseText);
+                console.log(response);
             }
         });
-    });
-   
-})  
+    })
+
+    // Function to retrieve and populate student data
+    function loadStudentData() {
+        $.ajax({
+            url: '../AddService/AddStudent.svc/ajaxService2/GetStudents', 
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // Clear existing table rows
+                $('#studentList tbody').empty();
+
+                // Populate the table with the retrieved data
+                $.each(data, function (index, student) {
+                    var row = $('<tr>');
+                    row.append($('<td>').text(student.Id));
+                    row.append($('<td>').text(student.Firstname));
+                    row.append($('<td>').text(student.Lastname));
+                    row.append($('<td>').text(student.Sex));
+                    row.append($('<td>').text(student.Dob));
+                    row.append($('<td>').text(student.Phone));
+                    row.append($('<td>').text(student.Email));
+                    row.append($('<td>').html('<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>'));
+                    row.append($('<td>').html('<button type="button" class="btn btn-primary btn-sm">Delete</button>'));
+                    $('#studentList tbody').append(row);
+                });
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error: ' + errorThrown);
+            }
+        });
+    }
+
+    // Call the function to initially load student data
+    loadStudentData();
+});
+
