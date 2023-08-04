@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
 
     var inputUsername = $('input')[0];
     var inputPassword = $('input')[1];
@@ -19,7 +20,8 @@
             event.preventDefault();
         }
     });
-
+    
+    //login 
     $('#btnsubmit').click(function (e) {
         e.preventDefault(); // prevent default form submit action
         var Valusername = $('#username').val();
@@ -34,8 +36,6 @@
                 // data is the return value of your WCF service method
                 if (data.d == "1") {
                     window.location.href = 'Default.aspx';
-                    //console.log(typeof (data.d));  //string
-                    //console.log(typeof (data)); //obj
                 } else {
                     Swal.fire({
                         background: '#fffff',
@@ -54,31 +54,27 @@
         });
     });
 
+    //logout
     $('#btnLogout').click(function () {
         $.ajax({
             method: 'POST',
             url: '../Loginservices/loginService.svc/ajaxService1/Logout',
             success: function (data) {
-                if (data.d == "Hello pretty girl") {
-                    Swal.fire({
-                        background: '#fffff',
-                        icon: 'error',
-                        text: 'Incorrect username or password',
-                        iconColor: '',
-                        confirmButtonColor: '#3F3D56',
-                        showCloseButton: true
-                    })
-                } else {
-                    alert("hI");
-                }
-                //console.log(typeof (data))
-                /*alert(data.d);*/
-                // Reload the page after logout
-                //        window.location.href = 'Default.aspx';
-
+                //if (data.d == "Hello pretty girl") {
+                //    Swal.fire({
+                //        background: '#fffff',
+                //        icon: 'error',
+                //        text: 'Incorrect username or password',
+                //        iconColor: '',
+                //        confirmButtonColor: '#3F3D56',
+                //        showCloseButton: true
+                //    })
+                //} else {
+                //    alert("hI");
+                //}
+                console.log("log out successfuly");
             },
             error: function (error) {
-                // Handle the error
                 alert('Error: ' + error);
             }
         });
@@ -94,7 +90,7 @@
         alert("hi");
     });
 
-   
+   //fetch data 
     $("#btnAddstudent").click(function (e) {
         e.preventDefault(); // prevent default form submit action
         var Valfname = $('#AddStudentfname').val();
@@ -146,38 +142,114 @@
         });
     })
 
-    // Function to retrieve and populate student data
-    function loadStudentData() {
-        $.ajax({
-            url: '../AddService/AddStudent.svc/ajaxService2/GetStudents', 
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                // Clear existing table rows
-                $('#studentList tbody').empty();
+    var obj = {
+        test: "hi"
+    };
 
-                // Populate the table with the retrieved data
-                $.each(data, function (index, student) {
-                    var row = $('<tr>');
-                    row.append($('<td>').text(student.Id));
-                    row.append($('<td>').text(student.Firstname));
-                    row.append($('<td>').text(student.Lastname));
-                    row.append($('<td>').text(student.Sex));
-                    row.append($('<td>').text(student.Dob));
-                    row.append($('<td>').text(student.Phone));
-                    row.append($('<td>').text(student.Email));
-                    row.append($('<td>').html('<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>'));
-                    row.append($('<td>').html('<button type="button" class="btn btn-primary btn-sm">Delete</button>'));
-                    $('#studentList tbody').append(row);
-                });
+    //display on table
+    $.ajax({
+        method: 'POST',
+        url: '../AddService/AddStudent.svc/ajaxService2/GetStudents',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(obj),
+        dataType: "json",
+        success: function (data) {
+            console.log(data) 
+            console.log(data.d) //1
+            var result = JSON.parse(data.d)
+            console.log(result[0].id);   //access array of obj 
+
+            var table = $("#studentList tbody");
+            table.empty();
+            $.each(result, function (index, result) {
+                var row = $("<tr>").data('id', result.id);
+                row.append($("<td>").text(result.id));
+                row.append($("<td>").text(result.firstname));
+                row.append($("<td>").text(result.lastname));
+                row.append($("<td>").text(result.sex));
+                row.append($("<td>").text(result.dob));
+                row.append($("<td>").text(result.phone));
+                row.append($("<td>").text(result.email));
+                row.append($("<td>").html('<button type="button" class="btn btn-primary update-btn btn-sm" data-bs-toggle="modal" id="updated-modal" data-bs-target="#exampleModal">Update</button>'));
+                row.append($("<td>").html('<button type="button" class="btn btn-primary btn-sm btn-delete deleteButton">Delete</button>'));
+                table.append(row);
+            });
+        },
+        error: function (error) {
+            console.log(error);
+            var response = JSON.parse(error.responseText);
+            console.log(response);
+        }
+    });
+
+    //delete data
+    $(document).on('click', '.deleteButton', function () {
+        var row = $(this).closest('tr');
+        console.log(row);
+        var id = row.find('td:first').text();
+        console.log(id);
+
+        $.ajax({
+            method: 'POST',
+            url: '../AddService/AddStudent.svc/ajaxService2/DeleteStudent',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ id: id }),
+            dataType: "json",
+            success: function (data) {
+                if (data.d == "1") {
+                    row.remove();
+                } else {
+                    console.log('delete error ');
+                }
             },
-            error: function (xhr, textStatus, errorThrown) {
-                console.log('Error: ' + errorThrown);
+            error: function (error) {
+                console.log(error);
+                var response = JSON.parse(error.responseText);
+                console.log(response);
             }
         });
-    }
+    });
 
-    // Call the function to initially load student data
-    loadStudentData();
+    //update student 
+    $(document).on('click', '.update-btn', function () {
+        var row = $(this).closest('tr');
+        console.log(row);
+        var id = row.find('td:first').text();
+        var Valfname = $('#AddStudentfname').val();
+        var Vallname = $('#AddStudentlname').val();
+        var Valsex = $('#AddStudentsex').val();
+        var Valdob = $('#AddStudentdob').val();
+        var Valphone = $('#AddStudentphone').val();
+        var Valemail = $('#AddStudentemail').val();
+        var obj = {
+            firstname: Valfname,
+            lastname: Vallname,
+            sex: Valsex,
+            dob: Valdob,
+            phone: Valphone,
+            email: Valemail
+        };
+        console.log(id);
+        $.ajax({
+            method: 'POST',
+            url: '../AddService/AddStudent.svc/ajaxService2/UpdateStudent',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ id: id }),
+            dataType: "json",
+            success: function (data) {
+                if (data.d == "1") {
+                    alert("updated sucessfuly")
+                } else {
+                    console.log('delete error ');
+                }
+            },
+            error: function (error) {
+                console.log(error);
+                var response = JSON.parse(error.responseText);
+                console.log(response);
+            }
+        });
+    });
+
 });
 

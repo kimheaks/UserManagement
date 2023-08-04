@@ -7,6 +7,7 @@ namespace Admlogin.Class
 {
     public class studentInfo
     {
+        public string id { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
         public char sex { get; set; }

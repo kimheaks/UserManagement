@@ -16,7 +16,14 @@ namespace Admlogin.AddService
         string appendStudent(string firstname, string lastname, char sex, string dob, string phone, string email);
 
         [OperationContract]
-        List<Dictionary<string, object>> GetStudents();
+        string GetStudents(string json);
+
+        [OperationContract]
+        string DeleteStudent(int id);
+
+        [OperationContract]
+        string UpdateStudent(int id);
+
     }
 
 }

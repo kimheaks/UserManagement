@@ -56,10 +56,10 @@ namespace Admlogin.Loginservices
                 }
             }
         }
-        public string Logout()
+        public void Logout()
         {
-            return "Hello pretty girl";
-            //FormsAuthentication.SignOut();
+            //return "Hello pretty girl";
+            FormsAuthentication.SignOut();
         }
     }
     

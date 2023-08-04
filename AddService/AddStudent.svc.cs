@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
+using System.Web.Script.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
-
+using Admlogin.Class;
+using Newtonsoft.Json;
 
 
 namespace Admlogin.AddService
@@ -53,39 +55,124 @@ namespace Admlogin.AddService
             }
         }
 
-        public List<Dictionary<string, object>> GetStudents() 
+        public string GetStudents(string json)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
             // Create a list to store the student data
-            List<Dictionary<string, object>> students = new List<Dictionary<string, object>>();
+            List<studentInfo> students = new List<studentInfo>();
 
-            // Query the database to retrieve the student data
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM Students", connection))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    connection.Open();
+                    string query = "SELECT studentId, studentFirstname, studentLastname, studentSex, studentDob, studentPhone, studentEmail FROM studentInfo";
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        while (reader.Read())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            // Create a dictionary to store the student data
-                            Dictionary<string, object> student = new Dictionary<string, object>();
-                            for (int i = 0; i < reader.FieldCount; i++)
+                            while (reader.Read())
                             {
-                                student[reader.GetName(i)] = reader.GetValue(i);
-                            }
+                                studentInfo student = new studentInfo
+                                {
+                                    id= reader["studentId"].ToString(),
+                                    firstname = reader["studentFirstname"].ToString(),
+                                    lastname = reader["studentLastname"].ToString(),
+                                    sex = Convert.ToChar(reader["studentSex"]),
+                                    dob = reader["studentDob"].ToString(),
+                                    phone = reader["studentPhone"].ToString(),
+                                    email = reader["studentEmail"].ToString()
+                                };
 
-                            // Add the dictionary to the list
-                            students.Add(student);
+                                students.Add(student);
+                            }
                         }
                     }
                 }
+
+                // Serialize the data to JSON 
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                json = serializer.Serialize(students);
+
+
+                return json;
             }
-            // Return the list of dictionaries
-            return students;
+            catch (Exception ex)
+            {
+                return "0" + ex;
+                
+            }
+
+        }
+
+
+        public string DeleteStudent(int id)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                try
+                {
+                    using (SqlCommand command = new SqlCommand("DELETE FROM studentInfo WHERE studentId = @Id", connection))
+                    {
+                        // Add the id parameter
+                        command.Parameters.AddWithValue("@Id", id);
+                        command.ExecuteNonQuery();
+                    }
+
+                    return "1";
+                }
+                catch (Exception e)
+                {
+
+                    return "0" + e;
+                
+                }
+                
+            }
+
+        }
+
+        public string UpdateStudent(int id) 
+        {
+
+            string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            string updateQuery = "UPDATE studentInfo SET studentFirstname=@fname, studentLastname=@lname, studentSex=@sx, studentDob=@dob, studentPhone=@ph,studetEmail=@email WHERE id=@id ";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                studentInfo obj = new studentInfo();
+
+                try
+                {
+                    using (SqlCommand command = new SqlCommand(updateQuery, connection))
+                    {
+                        // Add the id parameter
+                        command.Parameters.AddWithValue("@id", id);
+                        command.Parameters.AddWithValue("@fname", obj.firstname);
+                        command.Parameters.AddWithValue("@lname", obj.lastname);
+                        command.Parameters.AddWithValue("@sx", obj.sex);
+                        command.Parameters.AddWithValue("@dob", obj.dob);
+                        command.Parameters.AddWithValue("@ph", obj.phone);
+                        command.Parameters.AddWithValue("@email", obj.email);
+                        command.ExecuteNonQuery();
+                    }
+
+                    return "1";
+                }
+                catch (Exception e)
+                {
+
+                    return "0" + e;
+                
+                }
+                
+            }
 
         }
 
     }
+
 }

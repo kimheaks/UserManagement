@@ -85,65 +85,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                  <td>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Update
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="">Student Information</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body justify-content-center">  
-                                <div class="container-fluid">
-                                <div class="card-body card-custom">
-                                    <div class="form-outline">
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <input type="text" id="inputfname" class="form-control bg-light my-4" name="fname" placeholder="Firstname"/>
-                                                <input type="text" id="inputSex" class="form-control bg-light my-4"  name="sex" placeholder="Sex (M or F)" />
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <input type="text" id="inputlastname" class="form-control bg-light my-4" name="lname" placeholder="Lastname"/>
-                                                <input type="text" id="inputdob" class="form-control bg-light my-4" name="dob"  placeholder="Date of birth" data-toggle="datepicker" />
-                                            </div>
-                                        </div>
-                                        <div class="row d-flex flex-column">
-                                            <div class="col">
-                                                <input type="text" id="inputphone" class="form-control bg-light my-2" name="phone" placeholder="Phone number"/>
-                                            </div>
-                                            <div class="col">
-                                                <input type="text" id="inputemail" class="form-control bg-light my-2"  name="email" placeholder="Email"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>                                                                                                        
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                            <button type="button" class="btn btn-primary">Update</button>
-                        </div>
-                        </div>
-                        </div>
-                    </div>                            
-                  </td>
-                  <td><button type="button" class="btn btn-primary btn-sm">Delete</button></td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
+                <tr style="display:none">
+                  <th scope="row" id="row2">2</th>
                   <td>Jacob</td>
                   <td>Thornton</td>
                   <td>@fat</td>
@@ -200,7 +143,7 @@
                   <td><button type="button" class="btn btn-primary btn-sm">Delete</button></td>
                 </tr>
                 <tr>
-                  <th scope="row">3</th>
+                  <th scope="row" id="row3">3</th>
                   <td>@twitter</td>
                   <td>@twitter</td>
                   <td>@twitter</td>

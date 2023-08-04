@@ -14,7 +14,7 @@ namespace Admlogin.Loginservices
         [OperationContract]
         string DoWork(string username, string password);
         [OperationContract]
-        string Logout();
+        void Logout();
     }
         
 }
