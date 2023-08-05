@@ -134,7 +134,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                            <button type="button" class="btn btn-primary">Update</button>
+                            <button type="button" class="btn btn-primary update-btn">Update</button>
                         </div>
                         </div>
                         </div>

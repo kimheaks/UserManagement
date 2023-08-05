@@ -105,7 +105,6 @@ namespace Admlogin.AddService
 
         }
 
-
         public string DeleteStudent(int id)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
@@ -135,42 +134,61 @@ namespace Admlogin.AddService
 
         }
 
-        public string UpdateStudent(int id) 
+        public string UpdateStudent(int id, string json)
+
         {
-
+            studentInfo newStudent = new studentInfo();
+            List<studentInfo> newstudentList = new List<studentInfo>();
             string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
-            string updateQuery = "UPDATE studentInfo SET studentFirstname=@fname, studentLastname=@lname, studentSex=@sx, studentDob=@dob, studentPhone=@ph,studetEmail=@email WHERE id=@id ";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                studentInfo obj = new studentInfo();
-
+            string UpdateQuery = "UPDATE studentInfo SET studentFirstname = @newStudentfname, studentLastname = @newStudentlname, studentSex = @newStudentsx, studentDob = @newStudentdob, studentPhone = @newStudentph , studentEmail = @newStudentemail WHERE studentId = @id ";
+            using (SqlConnection con = new SqlConnection(connectionString)) {
+                con.Open();
                 try
                 {
-                    using (SqlCommand command = new SqlCommand(updateQuery, connection))
-                    {
-                        // Add the id parameter
-                        command.Parameters.AddWithValue("@id", id);
-                        command.Parameters.AddWithValue("@fname", obj.firstname);
-                        command.Parameters.AddWithValue("@lname", obj.lastname);
-                        command.Parameters.AddWithValue("@sx", obj.sex);
-                        command.Parameters.AddWithValue("@dob", obj.dob);
-                        command.Parameters.AddWithValue("@ph", obj.phone);
-                        command.Parameters.AddWithValue("@email", obj.email);
+                    using (SqlCommand command = new SqlCommand(UpdateQuery, con)) {
+
+                        command.Parameters.AddWithValue("@Id", id);
+                        command.Parameters.AddWithValue("@newStudentfname", newStudent.firstname);
+                        command.Parameters.AddWithValue("@Id", newStudent.lastname);
+                        command.Parameters.AddWithValue("@Id", newStudent.sex);
+                        command.Parameters.AddWithValue("@Id", newStudent.dob);
+                        command.Parameters.AddWithValue("@Id", newStudent.phone);
+                        command.Parameters.AddWithValue("@Id", newStudent.email);
                         command.ExecuteNonQuery();
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                studentInfo objstudent = new studentInfo
+                                {
+                                    id = reader["studentId"].ToString(),
+                                    firstname = reader["studentFirstname"].ToString(),
+                                    lastname = reader["studentLastname"].ToString(),
+                                    sex = Convert.ToChar(reader["studentSex"]),
+                                    dob = reader["studentDob"].ToString(),
+                                    phone = reader["studentPhone"].ToString(),
+                                    email = reader["studentEmail"].ToString()
+                                };
+
+                                newstudentList.Add(objstudent);
+                            }
+                        }
                     }
 
-                    return "1";
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    json = serializer.Serialize(newstudentList);
+
+                    return json;
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
 
                     return "0" + e;
-                
                 }
-                
-            }
 
+            }
+                
         }
 
     }

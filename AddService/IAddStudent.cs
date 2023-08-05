@@ -22,7 +22,8 @@ namespace Admlogin.AddService
         string DeleteStudent(int id);
 
         [OperationContract]
-        string UpdateStudent(int id);
+        string UpdateStudent(int id, string json);
+
 
     }
 

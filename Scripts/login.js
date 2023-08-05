@@ -158,7 +158,6 @@ $(document).ready(function () {
             console.log(data.d) //1
             var result = JSON.parse(data.d)
             console.log(result[0].id);   //access array of obj 
-
             var table = $("#studentList tbody");
             table.empty();
             $.each(result, function (index, result) {
@@ -170,7 +169,7 @@ $(document).ready(function () {
                 row.append($("<td>").text(result.dob));
                 row.append($("<td>").text(result.phone));
                 row.append($("<td>").text(result.email));
-                row.append($("<td>").html('<button type="button" class="btn btn-primary update-btn btn-sm" data-bs-toggle="modal" id="updated-modal" data-bs-target="#exampleModal">Update</button>'));
+                row.append($("<td>").html('<button type="button" id="update-btn" class="btn btn-primary update-btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>'));
                 row.append($("<td>").html('<button type="button" class="btn btn-primary btn-sm btn-delete deleteButton">Delete</button>'));
                 table.append(row);
             });
@@ -213,43 +212,93 @@ $(document).ready(function () {
     //update student 
     $(document).on('click', '.update-btn', function () {
         var row = $(this).closest('tr');
-        console.log(row);
-        var id = row.find('td:first').text();
-        var Valfname = $('#AddStudentfname').val();
-        var Vallname = $('#AddStudentlname').val();
-        var Valsex = $('#AddStudentsex').val();
-        var Valdob = $('#AddStudentdob').val();
-        var Valphone = $('#AddStudentphone').val();
-        var Valemail = $('#AddStudentemail').val();
-        var obj = {
-            firstname: Valfname,
-            lastname: Vallname,
-            sex: Valsex,
-            dob: Valdob,
-            phone: Valphone,
-            email: Valemail
-        };
+        var id = row.data('id');
         console.log(id);
+        populateModal(id);
+    });
+
+    function populateModal(id) {
         $.ajax({
             method: 'POST',
-            url: '../AddService/AddStudent.svc/ajaxService2/UpdateStudent',
+            url: '../AddService/AddStudent.svc/ajaxService2/GetStudents',
+            data: { id: id }, 
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ id: id }),
+            data: JSON.stringify(obj),
             dataType: "json",
             success: function (data) {
-                if (data.d == "1") {
-                    alert("updated sucessfuly")
+
+                if (data.d == "0") {
+                    console.log("error");
                 } else {
-                    console.log('delete error ');
+                    var modalData = JSON.parse(data.d);
+                    console.log(modalData)
+                    console.log(modalData[0].firstname)
+                    console.log(modalData[0].lastname)
+                    $('#exampleModal').find('.modal-title').text('Update Student: ' + modalData[0].firstname);
+                    $('#exampleModal').find('#AddStudentfname').val(modalData[0].firstname);
+                    $('#exampleModal').find('#AddStudentlname').val(modalData[0].lastname);
+                    $('#exampleModal').find('#AddStudentsex').val(modalData[0].sex);
+                    $('#exampleModal').find('#AddStudentdob').val(modalData[0].dob);
+                    $('#exampleModal').find('#AddStudentphone').val(modalData[0].phone);
+                    $('#exampleModal').find('#AddStudentemail').val(modalData[0].email);
+                    $('#exampleModal').find('#btnAddstudent').text('Update');
+                    //set new id to button
+                    $('#exampleModal').find('#btnAddstudent').attr('id', '#btnUpdate');
                 }
+                
             },
             error: function (error) {
-                console.log(error);
                 var response = JSON.parse(error.responseText);
                 console.log(response);
             }
         });
-    });
+    }
+
+    $('.update-btn').click(function (e) {
+        e.preventDefault();
+        var newfname = $('#AddStudentfname').val();
+        var newlname = $('#AddStudentfname').val();
+        var newsex = $('#AddStudentsex').val();
+        var newdob = $('#AddStudentdob').val();
+        var newph = $('#AddStudentphone').val();
+        var newemail = $('#AddStudentemail').val();
+        var studentobj = {
+            firstname: newfname,
+            lastname: newlname,
+            sex: newsex,
+            dob: newdob,
+            phone: newph,
+            email: newemail
+        };
+        $.ajax({
+
+            method: 'POST',
+            url: '../AddService/AddStudent.svc/ajaxService2/UpdateStudent',
+            data: JSON.stringify(studentobj),
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data.d == "0") {
+                    alert("updated error")
+                } else {
+
+                   var result = JSON.parse(data.d)
+
+                }
+            },
+            error: function (error) {
+                var response = JSON.parse(error.responseText);
+                console.log(response);
+            }
+        })
+
+
+        
+
+
+
+
+    })
 
 });
 
