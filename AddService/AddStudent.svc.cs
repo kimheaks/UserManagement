@@ -134,7 +134,7 @@ namespace Admlogin.AddService
 
         }
 
-        public string UpdateStudent(int id, string json)
+        public string UpdateStudent(int id, string firstname, string lastname, char sex, string dob, string phone, string email, string json)
 
         {
             studentInfo newStudent = new studentInfo();
@@ -147,13 +147,13 @@ namespace Admlogin.AddService
                 {
                     using (SqlCommand command = new SqlCommand(UpdateQuery, con)) {
 
-                        command.Parameters.AddWithValue("@Id", id);
-                        command.Parameters.AddWithValue("@newStudentfname", newStudent.firstname);
-                        command.Parameters.AddWithValue("@Id", newStudent.lastname);
-                        command.Parameters.AddWithValue("@Id", newStudent.sex);
-                        command.Parameters.AddWithValue("@Id", newStudent.dob);
-                        command.Parameters.AddWithValue("@Id", newStudent.phone);
-                        command.Parameters.AddWithValue("@Id", newStudent.email);
+                        command.Parameters.AddWithValue("@id", id);
+                        command.Parameters.AddWithValue("@newStudentfname", firstname);
+                        command.Parameters.AddWithValue("@newStudentlname", lastname);
+                        command.Parameters.AddWithValue("@newStudentsx", sex);
+                        command.Parameters.AddWithValue("@newStudentdob", dob);
+                        command.Parameters.AddWithValue("@newStudentph", phone);
+                        command.Parameters.AddWithValue("@newStudentemail", email);
                         command.ExecuteNonQuery();
 
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -189,6 +189,21 @@ namespace Admlogin.AddService
 
             }
                 
+        }
+
+        public string SearchStudent(int id, string firstname, string lastname)
+        {
+            try
+            {
+
+                return "1";
+
+            }
+            catch (Exception e) {
+
+                return "0" + e;
+            }
+        
         }
 
     }
