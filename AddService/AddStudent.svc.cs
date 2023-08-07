@@ -137,7 +137,6 @@ namespace Admlogin.AddService
         public string UpdateStudent(int id, string firstname, string lastname, char sex, string dob, string phone, string email, string json)
 
         {
-            studentInfo newStudent = new studentInfo();
             List<studentInfo> newstudentList = new List<studentInfo>();
             string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
             string UpdateQuery = "UPDATE studentInfo SET studentFirstname = @newStudentfname, studentLastname = @newStudentlname, studentSex = @newStudentsx, studentDob = @newStudentdob, studentPhone = @newStudentph , studentEmail = @newStudentemail WHERE studentId = @id ";
@@ -191,19 +190,57 @@ namespace Admlogin.AddService
                 
         }
 
-        public string SearchStudent(int id, string firstname, string lastname)
+        public string SearchStudent(string search)
         {
+
+            string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            string searchQuery = "SELECT studentId, studentFirstname, studentLastname, studentSex, studentDob, studentPhone, studentEmail FROM studentInfo WHERE studentFirstname LIKE @search OR studentLastname LIKE @search";
+
             try
             {
+                List<studentInfo> students = new List<studentInfo>();
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
 
-                return "1";
+                    using (SqlCommand command = new SqlCommand(searchQuery, con))
+                    {
+
+                        command.Parameters.AddWithValue("@search", "%" + search + "%");
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                studentInfo student = new studentInfo
+                                {
+                                    id = reader["studentId"].ToString(),
+                                    firstname = reader["studentFirstname"].ToString(),
+                                    lastname = reader["studentLastname"].ToString(),
+                                    sex = Convert.ToChar(reader["studentSex"]),
+                                    dob = reader["studentDob"].ToString(),
+                                    phone = reader["studentPhone"].ToString(),
+                                    email = reader["studentEmail"].ToString()
+                                };
+
+                                students.Add(student);
+                            }
+                        }
+
+                    }
+
+                    // Serialize the data to JSON 
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    string json = serializer.Serialize(students);
+                    return json;
+
+                }
 
             }
-            catch (Exception e) {
-
+            catch (Exception e)
+            {
                 return "0" + e;
             }
-        
+
         }
 
     }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Web.Security;
+using Admlogin.Class;
 
 namespace Admlogin.Loginservices
 {
@@ -17,10 +18,8 @@ namespace Admlogin.Loginservices
     {
         public string DoWork(string username, string password)
         {
-            // Check if the user is already authenticated
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                // User is already authenticated, return success
                 return "1";
             }
             else
@@ -56,10 +55,18 @@ namespace Admlogin.Loginservices
                 }
             }
         }
-        public void Logout()
+        public string Logout()
+        
         {
-            //return "Hello pretty girl";
-            FormsAuthentication.SignOut();
+            try
+            {
+                FormsAuthentication.SignOut();
+                return "1";
+            }
+            catch(Exception e)
+            {
+                return "0" + e;
+            };
         }
     }
     

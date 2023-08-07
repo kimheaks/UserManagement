@@ -7,15 +7,14 @@
                 <div class="row">
                     <div class="col-10">
                         <div class="input-group">
-                            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                            <button type="button" class="btn btn-outline-primary" id="btnsearch">search</button>
+                            <input type="search" id="inputSearch" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
                         </div>
                     </div>
-                    <div class="col-2 d-flex align-self-end">
+                    <div class="col-2 d-flex ">
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" class="btn btn-primary align-self-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                   Add Student
                                 </button>
 
@@ -70,7 +69,7 @@
     
     </header>
     <section>
-        <div class="container-fluid" id="form-container">
+        <div class="container" id="form-container">
             <table class="table" id="studentList">
               <thead>
                 <tr>
@@ -78,7 +77,7 @@
                   <th scope="col">Firstname</th>
                   <th scope="col">Lastname</th>
                   <th scope="col">Sex</th>
-                  <th scope="col">Dob</th>
+                  <th scope="col">Create Date</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Email</th>
                   <th colspan="2" class="justify-content-center">Action</th>

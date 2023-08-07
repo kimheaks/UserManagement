@@ -71,3 +71,4 @@ D:\WEB_internship\Admlogin\obj\Debug\Admlogin.csproj.CoreCompileInputs.cache
 D:\WEB_internship\Admlogin\obj\Debug\Admlogin.csproj.CopyComplete
 D:\WEB_internship\Admlogin\obj\Debug\Admlogin.dll
 D:\WEB_internship\Admlogin\obj\Debug\Admlogin.pdb
+D:\WEB_internship\Admlogin\obj\Debug\Admlogin.csproj.AssemblyReference.cache
