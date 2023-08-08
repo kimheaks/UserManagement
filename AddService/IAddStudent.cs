@@ -19,6 +19,10 @@ namespace Admlogin.AddService
         string GetStudents(string json);
 
         [OperationContract]
+        string GetStudentstoupdate(int id, string json);
+
+
+        [OperationContract]
         string DeleteStudent(int id);
 
         [OperationContract]

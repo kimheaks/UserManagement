@@ -9,7 +9,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using Admlogin.Class;
-using Newtonsoft.Json;
 
 
 namespace Admlogin.AddService
@@ -21,7 +20,6 @@ namespace Admlogin.AddService
         public string appendStudent(string firstname, string lastname, char sex, string dob, string phone, string email)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
-            // Create the SQL query string
             string query = "INSERT INTO studentInfo (studentFirstname, studentLastname, studentSex, studentDob, studentPhone, studentEmail) " +
                            "VALUES (@firstname, @lastname, @sex, @dob, @phone, @email)";
 
@@ -32,7 +30,6 @@ namespace Admlogin.AddService
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.CommandType = CommandType.Text;
-
                     command.Parameters.AddWithValue("@firstname", firstname);
                     command.Parameters.AddWithValue("@lastname", lastname);
                     command.Parameters.AddWithValue("@sex", sex);
@@ -105,6 +102,54 @@ namespace Admlogin.AddService
 
         }
 
+        public string GetStudentstoupdate(int id, string json)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
+            // Create a list to store the student data
+            List<studentInfo> Updatestudents = new List<studentInfo>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "SELECT studentId, studentFirstname, studentLastname, studentSex, studentDob, studentPhone, studentEmail FROM studentInfo WHERE studentId= @id ";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", id);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                studentInfo student = new studentInfo
+                                {
+                                    id = reader["studentId"].ToString(),
+                                    firstname = reader["studentFirstname"].ToString(),
+                                    lastname = reader["studentLastname"].ToString(),
+                                    sex = Convert.ToChar(reader["studentSex"]),
+                                    dob = reader["studentDob"].ToString(),
+                                    phone = reader["studentPhone"].ToString(),
+                                    email = reader["studentEmail"].ToString()
+                                };
+
+                                Updatestudents.Add(student);
+                            }
+                        }
+                        
+                    }
+                }
+
+                // Serialize the data to JSON 
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                json = serializer.Serialize(Updatestudents);
+                return json;
+            }
+            catch (Exception ex)
+            {
+                return "0" + ex;
+
+            }
+        }
+
         public string DeleteStudent(int id)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
@@ -137,6 +182,7 @@ namespace Admlogin.AddService
         public string UpdateStudent(int id, string firstname, string lastname, char sex, string dob, string phone, string email, string json)
 
         {
+            studentInfo newStudent = new studentInfo();
             List<studentInfo> newstudentList = new List<studentInfo>();
             string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
             string UpdateQuery = "UPDATE studentInfo SET studentFirstname = @newStudentfname, studentLastname = @newStudentlname, studentSex = @newStudentsx, studentDob = @newStudentdob, studentPhone = @newStudentph , studentEmail = @newStudentemail WHERE studentId = @id ";
@@ -192,7 +238,6 @@ namespace Admlogin.AddService
 
         public string SearchStudent(string search)
         {
-
             string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
             string searchQuery = "SELECT studentId, studentFirstname, studentLastname, studentSex, studentDob, studentPhone, studentEmail FROM studentInfo WHERE studentFirstname LIKE @search OR studentLastname LIKE @search";
 
@@ -228,7 +273,6 @@ namespace Admlogin.AddService
 
                     }
 
-                    // Serialize the data to JSON 
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
                     string json = serializer.Serialize(students);
                     return json;

@@ -71,19 +71,18 @@
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />
-        </div>
-        <section class="page-section">
+
             <footer class="bg-taro text-center text-lg-start">
                 <div class="container">
-                    <div class="row">
-                        <div class="text-center text-light p-3">
-                          © 2023 Copyright:
-                        <a class="text-light" href="https://t.me/maxxmay24">Kimheak kong</a>
-                        </div>
-                    </div>
+                        <!-- Copyright -->
+                  <div class="text-center text-light p-3">
+                      © 2023 Copyright:s 
+                    <a class="text-light" href="https://t.me/maxxmay24">Kimheak kong</a>
+                  </div>
+                    <!-- Copyright -->
                 </div>
             </footer>
-        </section>
+        </div>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker/dist/js/datepicker.min.js"></script>

@@ -259,7 +259,6 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Class\logOutResponse.cs" />
     <Compile Include="Class\studentInfo.cs" />
     <Compile Include="Connected Services\LoginServiceReference1\Reference.cs">
       <AutoGen>True</AutoGen>

@@ -5,19 +5,18 @@
         <div class="container-lg">
             <div class="jumbotron py-4">
                 <div class="row">
-                    <div class="col-10">
+                    <div class="col-md-10">
                         <div class="input-group">
-                            <input type="search" id="inputSearch" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                            <input type="search" class="form-control rounded" id="inputSearch" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
                         </div>
                     </div>
-                    <div class="col-2 d-flex ">
+                    <div class="col-2 d-flex align-self-end">
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary align-self-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" id="btnAdd" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                   Add Student
                                 </button>
-
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -32,19 +31,28 @@
                                                 <div class="form-outline">
                                                     <div class="row">
                                                         <div class="col-lg-6">
-                                                            <input type="text"  class="form-control bg-light my-4" id="AddStudentfname" name="fname" placeholder="Firstname"/>
-                                                            <input type="text" class="form-control bg-light my-4" id="AddStudentsex" name="sex" placeholder="Sex" />
+                                                            <label for="exampleModalLabel">FirstName</label>
+                                                            <input type="text"  class="form-control bg-light my-2" id="AddStudentfname" name="fname" placeholder="Firstname"/>
+                                                            <label for="exampleModalLabel">Sex</label>
+                                                            <select class="form-select my-2" aria-label="Default select example" id="AddStudentsex" name="sex">
+                                                              <option value="F">F</option>
+                                                              <option value="M">M</option>
+                                                            </select>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <input type="text" class="form-control bg-light my-4" id="AddStudentlname" name="lname" placeholder="Lastname"/>
-                                                            <input type="text" class="form-control bg-light my-4" id="AddStudentdob" name="dob"  placeholder="Date of birth" data-toggle="datepicker" />
+                                                            <label for="exampleModalLabel">LastName</label>
+                                                            <input type="text" class="form-control bg-light my-2" id="AddStudentlname" name="lname" placeholder="Lastname"/>
+                                                            <label for="exampleModalLabel">DateCreate</label>
+                                                            <input type="text" class="form-control bg-light my-2" id="AddStudentdob" name="dob"  placeholder="Date of birth" data-toggle="datepicker" />
                                                         </div>
                                                     </div>
                                                     <div class="row d-flex flex-column">
                                                         <div class="col">
+                                                            <label for="exampleModalLabel">Phone</label>
                                                             <input type="text"  class="form-control bg-light my-2" id="AddStudentphone" name="phone" placeholder="Phone number"/>
                                                         </div>
                                                         <div class="col">
+                                                            <label for="exampleModalLabel">Email</label>
                                                             <input type="text" class="form-control bg-light my-2" id="AddStudentemail"  name="email" placeholder="Email"/>
                                                         </div>
                                                     </div>
@@ -69,7 +77,7 @@
     
     </header>
     <section>
-        <div class="container" id="form-container">
+        <div class="container-fluid" id="form-container">
             <table class="table" id="studentList">
               <thead>
                 <tr>
@@ -77,7 +85,7 @@
                   <th scope="col">Firstname</th>
                   <th scope="col">Lastname</th>
                   <th scope="col">Sex</th>
-                  <th scope="col">Create Date</th>
+                  <th scope="col">Dob</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Email</th>
                   <th colspan="2" class="justify-content-center">Action</th>
