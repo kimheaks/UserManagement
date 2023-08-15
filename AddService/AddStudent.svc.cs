@@ -17,11 +17,10 @@ namespace Admlogin.AddService
     // NOTE: In order to launch WCF Test Client for testing this service, please select AddStudent.svc or AddStudent.svc.cs at the Solution Explorer and start debugging.
     public class AddStudent : IAddStudent
     {
-        public string appendStudent(string firstname, string lastname, char sex, string dob, string phone, string email)
+        public string appendStudent(string firstname, string lastname, string sex, string dob, string  phone, string email, string cpsw)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
-            string query = "INSERT INTO studentInfo (studentFirstname, studentLastname, studentSex, studentDob, studentPhone, studentEmail) " +
-                           "VALUES (@firstname, @lastname, @sex, @dob, @phone, @email)";
+            string query = "InsertStudentInfo";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -36,16 +35,17 @@ namespace Admlogin.AddService
                     command.Parameters.AddWithValue("@dob", dob);
                     command.Parameters.AddWithValue("@phone", phone);
                     command.Parameters.AddWithValue("@email", email);
+                    command.Parameters.AddWithValue("@password", cpsw);
 
                     int rowsAffected = command.ExecuteNonQuery();
 
                     if (rowsAffected > 0)
                     {
-                        return "1"; // Return a success message
+                        return "1"; 
                     }
                     else
                     {
-                        return "0"; // Return an error message
+                        return "0"; 
                     }
                 }
 
@@ -286,6 +286,9 @@ namespace Admlogin.AddService
             }
 
         }
+
+
+
 
     }
 

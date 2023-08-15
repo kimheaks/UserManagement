@@ -109,7 +109,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About.aspx" />
+    <Content Include="Content\styleProfile.css" />
+    <Content Include="img\pf1.jpg" />
+    <Content Include="img\undraw_Female_avatar_efig.png" />
+    <Content Include="studentProfile.aspx" />
     <None Include="Connected Services\LoginServiceReference1\loginService.disco" />
     <None Include="Connected Services\LoginServiceReference1\configuration91.svcinfo" />
     <None Include="Connected Services\LoginServiceReference1\configuration.svcinfo" />
@@ -201,7 +204,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="HtmlPage1.html" />
     <Content Include="img\img-01.png" />
     <Content Include="img\undraw_progressive_app_m-9-ms.svg" />
     <Content Include="img\undraw_secure_login_pdn4.svg" />
@@ -251,12 +253,12 @@
     </Compile>
     <Compile Include="AddService\IAddStudent.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="About.aspx.cs">
-      <DependentUpon>About.aspx</DependentUpon>
+    <Compile Include="studentProfile.aspx.cs">
+      <DependentUpon>studentProfile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="About.aspx.designer.cs">
-      <DependentUpon>About.aspx</DependentUpon>
+    <Compile Include="studentProfile.aspx.designer.cs">
+      <DependentUpon>studentProfile.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Class\studentInfo.cs" />
@@ -320,6 +322,13 @@
     <Compile Include="studentForm.aspx.designer.cs">
       <DependentUpon>studentForm.aspx</DependentUpon>
     </Compile>
+    <Compile Include="userSite.Master.cs">
+      <DependentUpon>userSite.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="userSite.Master.designer.cs">
+      <DependentUpon>userSite.Master</DependentUpon>
+    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -335,6 +344,7 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="userSite.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

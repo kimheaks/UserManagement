@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace Admlogin
 {
-    public partial class About : Page
+    public partial class userSite : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using Admlogin.Class;
 
 namespace Admlogin.AddService
 {
@@ -13,7 +14,7 @@ namespace Admlogin.AddService
     public interface IAddStudent
     {
         [OperationContract]
-        string appendStudent(string firstname, string lastname, char sex, string dob, string phone, string email);
+        string appendStudent(string firstname, string lastname, string sex, string dob, string phone, string email, string cpsw);
 
         [OperationContract]
         string GetStudents(string json);
@@ -30,6 +31,11 @@ namespace Admlogin.AddService
 
         [OperationContract]
         string SearchStudent(string search);
+
+
+     
+
+
 
     }
 

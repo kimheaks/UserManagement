@@ -1,4 +1,34 @@
 ﻿$(document).ready(function () {
+
+    const $imgDiv = $('#imgUpload');
+    const $img = $('#photo');
+    const $file = $('#file');
+    const $uploadBtn = $('#uploadBtn');
+
+    // If user hovers on img div
+    $imgDiv.on('mouseenter', function () {
+        $uploadBtn.css('display', 'block');
+    });
+
+    // If we hover out from img div
+    $imgDiv.on('mouseleave', function () {
+        $uploadBtn.css('display', 'none');
+    });
+
+    $file.on('change', function () {
+        const choosedFile = this.files[0];
+
+        if (choosedFile) {
+            const reader = new FileReader();
+
+            reader.onload = function () {
+                $img.attr('src', reader.result);
+            };
+
+            reader.readAsDataURL(choosedFile);
+        }
+    });
+
     var inputUsername = $('input')[0];
     var inputPassword = $('input')[1];
     // select all input elements and attach keypress event handlers
@@ -24,32 +54,51 @@
         e.preventDefault(); // prevent default form submit action
         var Valusername = $('#username').val();
         var Valpassword = $('#password').val();
-        $.ajax({
-            method: 'POST',
-            url: '../Loginservices/loginService.svc/ajaxService1/DoWork',
-            data: JSON.stringify({ username: Valusername, password: Valpassword }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                // data is the return value of your WCF service method
-                if (data.d == "1") {
-                    window.location.href = 'Default.aspx';
-                } else {
-                    Swal.fire({
-                        background: '#fffff',
-                        icon: 'error',
-                        text: 'Incorrect username or password',
-                        iconColor: '',
-                        confirmButtonColor: '#3F3D56',
-                        showCloseButton: true
-                    })
-                }
-            },
-            error: function (error) {
-                alert("error")
-            }
+        var student = { username: Valusername, password: Valpassword };
 
-        });
+        if (Valusername == 0 || Valpassword == 0) {
+            Swal.fire({
+                background: '#fffff',
+                icon: 'info',
+                text: 'Please enter username and password to continue',
+                iconColor: '',
+                confirmButtonColor: '#3F3D56',
+                showCloseButton: true
+            })
+        } else {
+            $.ajax({
+                method: 'POST',
+                url: '../Loginservices/loginService.svc/ajaxService1/DoWork',
+                data: JSON.stringify(student),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var result = data.d;
+                    if (result == "1") {
+                        window.location.href = 'Default.aspx';
+                    } else if (result == "2")
+                    {
+                        window.location.href = 'StudentProfile.aspx';
+                    } else {
+                        Swal.fire({
+                            background: '#fffff',
+                            icon: 'error',
+                            text: 'Incorrect username or password',
+                            iconColor: '',
+                            confirmButtonColor: '#3F3D56',
+                            showCloseButton: true
+                        })
+                    }
+                },
+                error: function (error) {
+                    alert("error")
+                    var response = JSON.parse(error.responseText);
+                    console.log(response);
+                }
+
+            });
+
+        }
     });
 
     //logout
@@ -62,13 +111,28 @@
             },
             error: function (error) {
                 alert('Error: ' + error);
+                var response = JSON.parse(error.responseText);
+                console.log(response);
+            }
+        });
+    });
+    $('#btnLogoutStudent').click(function () {
+        $.ajax({
+            method: 'POST',
+            url: '../Loginservices/loginService.svc/ajaxService1/Logout',
+            success: function (data) {
+                console.log("log out successfuly");
+            },
+            error: function (error) {
+                alert('Error: ' + error);
+                var response = JSON.parse(error.responseText);
+                console.log(response);
             }
         });
     });
 
+
     //input validation
-
-
     $('#AddStudentfname, #AddStudentlname').on('keydown', function (event) {
         if (!event.key.match(/^[a-zA-Z]+$/)) {
             event.preventDefault(); // Prevent the input of non-alphabetic characters
@@ -84,6 +148,16 @@
     //        event.preventDefault();
     //    }
     //});
+
+    function clearModalform() {
+        $('#exampleModal').find('#AddStudentfname').val('');
+        $('#exampleModal').find('#AddStudentlname').val('');
+        $('#exampleModal').find('#AddStudentsex').val('');
+        $('#exampleModal').find('#AddStudentdob').val('');
+        $('#exampleModal').find('#AddStudentphone').val('');
+        $('#exampleModal').find('#AddStudentemail').val('');
+    }
+
     function updateStudentTable() {
         var obj = {
             test: "hi"
@@ -127,21 +201,24 @@
 
    //Insert student data
     $("#btnAddstudent").click(function (e) {
-        e.preventDefault(); // prevent default form submit action
+        e.preventDefault(); //prevent default form submit action
         var Valfname = $('#AddStudentfname').val();
         var Vallname = $('#AddStudentlname').val();
         var Valsex = $('#AddStudentsex').val();
         var Valdob = $('#AddStudentdob').val();
         var Valphone = $('#AddStudentphone').val();
         var Valemail = $('#AddStudentemail').val();
+        var Valcpsw = $('#AddconfirmPassword').val();
         var obj= {
             firstname: Valfname,
             lastname: Vallname,
             sex: Valsex,
             dob: Valdob,
             phone: Valphone,
-            email: Valemail
+            email: Valemail,
+            cpsw : Valcpsw
         };
+        if(Val)
         $.ajax({
             method: 'POST',
             url: '../AddService/AddStudent.svc/ajaxService2/appendStudent',
@@ -160,6 +237,7 @@
                         showCloseButton: true
                     });
                     updateStudentTable();
+                    clearModalform();
                 } else {
                     Swal.fire({
                         background: '#fffff',
@@ -228,7 +306,6 @@
         populateModal(id);
         $(document).on('click', '#btnUpdate', function (e) {
             e.preventDefault();
-            alert("triggere");
             var newfname = $('#AddStudentfname').val();
             var newlname = $('#AddStudentlname').val();
             var newsex = $('#AddStudentsex').val();
@@ -252,11 +329,25 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     if (data.d == "0") {
-                        alert("updated error")
+                        Swal.fire({
+                            background: '#fffff',
+                            icon: 'error',
+                            text: 'Something went wrong',
+                            iconColor: 'red',
+                            confirmButtonColor: '#3F3D56',
+                            showCloseButton: true
+                        })
                     } else {
-
-                        var result = JSON.parse(data.d)
-                        console.log(result)
+                        Swal.fire({
+                            background: '#fffff',
+                            icon: 'success',
+                            text: 'Record has been updated successfuly',
+                            iconColor: 'green',
+                            confirmButtonColor: '#3F3D56',
+                            showCloseButton: true
+                        });
+                        updateStudentTable();
+                        clearModalform();
                     }
                 },
                 error: function (error) {

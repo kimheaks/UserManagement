@@ -46,14 +46,18 @@
                                                             <input type="text" class="form-control bg-light my-2" id="AddStudentdob" name="dob"  placeholder="Date of birth" data-toggle="datepicker" />
                                                         </div>
                                                     </div>
-                                                    <div class="row d-flex flex-column">
-                                                        <div class="col">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
                                                             <label for="exampleModalLabel">Phone</label>
                                                             <input type="text"  class="form-control bg-light my-2" id="AddStudentphone" name="phone" placeholder="Phone number"/>
+                                                            <label for="exampleModalLabel">Password</label>
+                                                            <input type="password" class="form-control bg-light my-2" id="AddPassword" name="psw" placeholder="Password"/>
                                                         </div>
-                                                        <div class="col">
+                                                        <div class="col-lg-6">
                                                             <label for="exampleModalLabel">Email</label>
                                                             <input type="text" class="form-control bg-light my-2" id="AddStudentemail"  name="email" placeholder="Email"/>
+                                                            <label for="exampleModalLabel">Confirm Password</label>
+                                                            <input type="password" class="form-control bg-light my-2" id="AddconfirmPassword"  name="cpsw" placeholder="Confirm Password"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -61,7 +65,7 @@
                                         </div>
                                           </div>
                                       <div class="modal-footer">
-                                        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                                        <button type="button" id="btnBack" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Back</button>
                                         <button type="submit" id="btnAddstudent" class="btn btn-primary">Add</button>
                                       </div>
                                     </div>
@@ -128,11 +132,13 @@
                                             </div>
                                         </div>
                                         <div class="row d-flex flex-column">
-                                            <div class="col">
+                                            <div class="col-lg-6">
                                                 <input type="text"  class="form-control bg-light my-2" name="phone" placeholder="Phone number"/>
+                                                <input type="password"  class="form-control bg-light my-2" name="password" placeholder="Set Password"/>
                                             </div>
-                                            <div class="col">
+                                            <div class="col-lg-6">
                                                 <input type="text" class="form-control bg-light my-2"  name="email" placeholder="Email"/>
+                                                <input type="text" class="form-control bg-light my-2"  name="role" placeholder="Role"/>
                                             </div>
                                         </div>
                                     </div>
@@ -140,7 +146,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             <button type="button" class="btn btn-primary update-btn">Update</button>
                         </div>
                         </div>
@@ -197,7 +203,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             <button type="button" class="btn btn-primary">Update</button>
                         </div>
                         </div>
