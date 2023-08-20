@@ -4,7 +4,7 @@ var datepicker = new Datepicker(elem, {
     // Set the button class to match Bootstrap 5.3
     buttonClass: 'btn',
     // Set the format of the date value
-    format: 'yyyy-mm-dd',
+    format: 'dd-mm-yy',
     // Set the autohide option to true
     autohide: true,
     // Other options...

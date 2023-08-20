@@ -2,12 +2,12 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <header>
-        <div class="container-lg">
+        <div class="container-lg py-4">
             <div class="jumbotron py-4">
                 <div class="row">
                     <div class="col-md-10">
                         <div class="input-group">
-                            <input type="search" class="form-control rounded" id="inputSearch" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                            <input type="search" class="form-control rounded" id="inputSearch" placeholder="Search by Name" aria-label="Search" aria-describedby="search-addon" autocomplete="off"  />
                         </div>
                     </div>
                     <div class="col-2 d-flex align-self-end">
@@ -23,51 +23,54 @@
                                     <div class="modal-content">
                                       <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Student Information</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <button type="button" class="btn-close" id="btnCloseTop" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
-                                      <div class="modal-body justify-content-center">  
+                                      <div class="modal-body align-item-center">  
                                           <div class="container-fluid">
-                                            <div class="card-body card-custom">
+                                              <form id="studentform">
                                                 <div class="form-outline">
                                                     <div class="row">
                                                         <div class="col-lg-6">
-                                                            <label for="exampleModalLabel">FirstName</label>
-                                                            <input type="text"  class="form-control bg-light my-2" id="AddStudentfname" name="fname" placeholder="Firstname"/>
+                                                            <label for="exampleModalLabel">First Name</label>
+                                                            <input type="text"  class="form-control bg-light my-2" id="AddStudentfname" name="fname" placeholder="Firstname" required="required"/>
+                                                            <div id="invalid-feedback-fname">
+                                                            </div>
                                                             <label for="exampleModalLabel">Sex</label>
-                                                            <select class="form-select my-2" aria-label="Default select example" id="AddStudentsex" name="sex">
+                                                            <select class="form-select my-2" aria-label="Default select example" id="AddStudentsex" name="sex" required="required">
+                                                              <option value="" disabled selected>Select sex</option>
                                                               <option value="F">F</option>
                                                               <option value="M">M</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <label for="exampleModalLabel">LastName</label>
-                                                            <input type="text" class="form-control bg-light my-2" id="AddStudentlname" name="lname" placeholder="Lastname"/>
-                                                            <label for="exampleModalLabel">DateCreate</label>
-                                                            <input type="text" class="form-control bg-light my-2" id="AddStudentdob" name="dob"  placeholder="Date of birth" data-toggle="datepicker" />
+                                                            <label for="exampleModalLabel">Last Name</label>
+                                                            <input type="text" class="form-control bg-light my-2" id="AddStudentlname" name="lname" placeholder="Lastname" required="required"/>
+                                                            <label for="exampleModalLabel">Date Created</label>
+                                                            <input type="text" class="form-control bg-light my-2" id="AddStudentdob" name="dob"  placeholder="Date Create" data-toggle="datepicker" required="required"/>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-lg-6">
                                                             <label for="exampleModalLabel">Phone</label>
-                                                            <input type="text"  class="form-control bg-light my-2" id="AddStudentphone" name="phone" placeholder="Phone number"/>
+                                                            <input type="text"  class="form-control bg-light my-2" id="AddStudentphone" name="phone" placeholder="Phone number" required="required"/>
                                                             <label for="exampleModalLabel">Password</label>
-                                                            <input type="password" class="form-control bg-light my-2" id="AddPassword" name="psw" placeholder="Password"/>
+                                                            <input type="password" class="form-control bg-light my-2" id="AddPassword" name="psw" placeholder="Password" required="required"/>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <label for="exampleModalLabel">Email</label>
-                                                            <input type="text" class="form-control bg-light my-2" id="AddStudentemail"  name="email" placeholder="Email"/>
+                                                            <input type="text" class="form-control bg-light my-2" id="AddStudentemail"  name="email" placeholder="Email" required="required"/>
                                                             <label for="exampleModalLabel">Confirm Password</label>
-                                                            <input type="password" class="form-control bg-light my-2" id="AddconfirmPassword"  name="cpsw" placeholder="Confirm Password"/>
+                                                            <input type="password" class="form-control bg-light my-2" id="AddconfirmPassword"  name="cpsw" placeholder="Confirm Password" required="required"/>
                                                         </div>
                                                     </div>
+                                                    <div class="modal-footer">
+                                                      <button type="submit" id="btnAddstudent" class="btn btn-primary">Add</button>
+                                                      <button type="button" id="btnBack" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                                                    </div>
                                                 </div>
-                                            </div>                                                                                                        
+                                            </form>                                                                                                        
+                                            </div>
                                         </div>
-                                          </div>
-                                      <div class="modal-footer">
-                                        <button type="button" id="btnBack" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Back</button>
-                                        <button type="submit" id="btnAddstudent" class="btn btn-primary">Add</button>
-                                      </div>
                                     </div>
                                   </div>
                                 </div>                            
@@ -78,18 +81,17 @@
             </div>
                 
          </div>
-    
     </header>
-    <section>
-        <div class="container-fluid" id="form-container">
+    <section class=" min-vh-100">
+        <div class="container-fluid d-flex justify-content-center align-item-center" id="form-container">
             <table class="table" id="studentList">
               <thead>
                 <tr>
                   <th scope="col">Id</th>
-                  <th scope="col">Firstname</th>
-                  <th scope="col">Lastname</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
                   <th scope="col">Sex</th>
-                  <th scope="col">Dob</th>
+                  <th scope="col">Date Create</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Email</th>
                   <th colspan="2" class="justify-content-center">Action</th>

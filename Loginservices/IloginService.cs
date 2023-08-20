@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using Admlogin.Class;
+using System.Web.Script.Serialization;
 
 namespace Admlogin.Loginservices
 {
@@ -14,10 +15,13 @@ namespace Admlogin.Loginservices
     {
 
         [OperationContract]
-        string DoWork(string username, string password);
+        string Login(string username, string password);
         
         [OperationContract]
         void Logout();
+
+        [OperationContract]
+        string GetStudents(string json);
     }
         
 }

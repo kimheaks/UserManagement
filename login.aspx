@@ -34,14 +34,14 @@
                                         <span class="p-left">
                                             <i class="fa fa-user" aria-hidden="true"></i>
                                         </span>
-                                        <input class="input" type="text" id="username" name="username" placeholder="Username" required="required" />
+                                        <input class="input" type="text" id="username" name="username" placeholder="Username" required />
                                         <span class="focus-input"></span>
                                     </div>
                                     <div class="input-custom">
                                         <span class="p-left">
                                             <i class="fa fa-lock" aria-hidden="true"></i>
                                         </span>
-                                        <input class="input" type="password" id="password" name="password" placeholder="Password" required="required"/>
+                                        <input class="input" type="password" id="password" name="password" placeholder="Password" required/>
                                         <span class="focus-input"></span>
                                     </div>
                                     <div class="input-custom">

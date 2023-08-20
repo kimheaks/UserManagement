@@ -11,13 +11,14 @@ namespace Admlogin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["LoggedIn"] == null)
+            if (HttpContext.Current.Request.Cookies["UserInfo"] == null)
             {
                 HttpContext.Current.Response.Redirect("login.aspx");
             }
             else
             {
-                string username = Session["Username"].ToString();
+                HttpCookie cookie = HttpContext.Current.Request.Cookies["UserInfo"];
+                string username = cookie["Username"];
             }
 
         }

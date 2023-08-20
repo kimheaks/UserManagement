@@ -51,7 +51,6 @@ D:\WEB_internship\Admlogin\bin\roslyn\vbc.rsp
 D:\WEB_internship\Admlogin\bin\roslyn\VBCSCompiler.exe
 D:\WEB_internship\Admlogin\bin\roslyn\VBCSCompiler.exe.config
 D:\WEB_internship\Admlogin\bin\Antlr3.Runtime.dll
-D:\WEB_internship\Admlogin\bin\AspNet.ScriptManager.bootstrap.dll
 D:\WEB_internship\Admlogin\bin\AspNet.ScriptManager.jQuery.dll
 D:\WEB_internship\Admlogin\bin\Microsoft.AspNet.FriendlyUrls.dll
 D:\WEB_internship\Admlogin\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll

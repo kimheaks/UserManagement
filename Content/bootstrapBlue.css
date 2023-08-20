@@ -2168,7 +2168,7 @@ progress {
 }
 .form-control::placeholder {
   color: var(--bs-secondary-color);
-  opacity: 1;
+  opacity: 0.5;
 }
 .form-control:disabled {
   background-color: var(--bs-secondary-bg);
@@ -2718,7 +2718,7 @@ textarea.form-control-lg {
 .input-group > .form-floating {
   position: relative;
   flex: 1 1 auto;
-  width: 1%;
+  width: 100% !important;
   min-width: 0;
 }
 .input-group > .form-control:focus,

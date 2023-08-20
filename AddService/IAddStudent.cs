@@ -27,7 +27,7 @@ namespace Admlogin.AddService
         string DeleteStudent(int id);
 
         [OperationContract]
-        string UpdateStudent(int id, string firstname, string lastname, char sex, string dob, string phone, string email,string json);
+        string UpdateStudent(int id, string firstname, string lastname, char sex, string dob, string phone, string email, string password, string json);
 
         [OperationContract]
         string SearchStudent(string search);

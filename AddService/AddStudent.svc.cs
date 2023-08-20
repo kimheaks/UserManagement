@@ -20,7 +20,7 @@ namespace Admlogin.AddService
         public string appendStudent(string firstname, string lastname, string sex, string dob, string  phone, string email, string cpsw)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
-            string query = "InsertStudentInfo";
+            string query = "EXEC InsertStudentInfo @firstname, @lastname, @sex, @dob, @phone, @email, @password";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -37,9 +37,10 @@ namespace Admlogin.AddService
                     command.Parameters.AddWithValue("@email", email);
                     command.Parameters.AddWithValue("@password", cpsw);
 
+                    
                     int rowsAffected = command.ExecuteNonQuery();
 
-                    if (rowsAffected > 0)
+                    if (rowsAffected != 0)
                     {
                         return "1"; 
                     }
@@ -76,7 +77,7 @@ namespace Admlogin.AddService
                                     firstname = reader["studentFirstname"].ToString(),
                                     lastname = reader["studentLastname"].ToString(),
                                     sex = Convert.ToChar(reader["studentSex"]),
-                                    dob = reader["studentDob"].ToString(),
+                                    dob = DateTime.Parse(reader["studentDob"].ToString()).ToString("dd-MM-yyyy"),
                                     phone = reader["studentPhone"].ToString(),
                                     email = reader["studentEmail"].ToString()
                                 };
@@ -112,7 +113,7 @@ namespace Admlogin.AddService
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT studentId, studentFirstname, studentLastname, studentSex, studentDob, studentPhone, studentEmail FROM studentInfo WHERE studentId= @id ";
+                    string query = "SELECT studentId, studentFirstname, studentLastname, studentSex, studentDob, studentPhone, studentEmail, studentPassword FROM studentInfo WHERE studentId= @id ";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@id", id);
@@ -126,9 +127,10 @@ namespace Admlogin.AddService
                                     firstname = reader["studentFirstname"].ToString(),
                                     lastname = reader["studentLastname"].ToString(),
                                     sex = Convert.ToChar(reader["studentSex"]),
-                                    dob = reader["studentDob"].ToString(),
+                                    dob = DateTime.Parse(reader["studentDob"].ToString()).ToString("dd-MM-yyyy"),
                                     phone = reader["studentPhone"].ToString(),
-                                    email = reader["studentEmail"].ToString()
+                                    email = reader["studentEmail"].ToString(),
+                                    password = reader["studentPassword"].ToString()
                                 };
 
                                 Updatestudents.Add(student);
@@ -179,13 +181,13 @@ namespace Admlogin.AddService
 
         }
 
-        public string UpdateStudent(int id, string firstname, string lastname, char sex, string dob, string phone, string email, string json)
+        public string UpdateStudent(int id, string firstname, string lastname, char sex, string dob, string phone, string email, string password, string json)
 
         {
             studentInfo newStudent = new studentInfo();
             List<studentInfo> newstudentList = new List<studentInfo>();
             string connectionString = ConfigurationManager.ConnectionStrings["conn"].ConnectionString;
-            string UpdateQuery = "UPDATE studentInfo SET studentFirstname = @newStudentfname, studentLastname = @newStudentlname, studentSex = @newStudentsx, studentDob = @newStudentdob, studentPhone = @newStudentph , studentEmail = @newStudentemail WHERE studentId = @id ";
+            string UpdateQuery = "UPDATE studentInfo SET studentFirstname = @newStudentfname, studentLastname = @newStudentlname, studentSex = @newStudentsx, studentDob = @newStudentdob, studentPhone = @newStudentph , studentEmail = @newStudentemail, studentPassword = @newStudentPassword WHERE studentId = @id ";
             using (SqlConnection con = new SqlConnection(connectionString)) {
                 con.Open();
                 try
@@ -199,6 +201,7 @@ namespace Admlogin.AddService
                         command.Parameters.AddWithValue("@newStudentdob", dob);
                         command.Parameters.AddWithValue("@newStudentph", phone);
                         command.Parameters.AddWithValue("@newStudentemail", email);
+                        command.Parameters.AddWithValue("@newStudentPassword", password);
                         command.ExecuteNonQuery();
 
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -213,7 +216,8 @@ namespace Admlogin.AddService
                                     sex = Convert.ToChar(reader["studentSex"]),
                                     dob = reader["studentDob"].ToString(),
                                     phone = reader["studentPhone"].ToString(),
-                                    email = reader["studentEmail"].ToString()
+                                    email = reader["studentEmail"].ToString(),
+                                    
                                 };
 
                                 newstudentList.Add(objstudent);
